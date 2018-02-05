@@ -12,9 +12,6 @@ import argparse
 from _redfishobject import RedfishObject
 from redfish.rest.v1 import ServerDownOrUnreachableError
 
-# IA696 98:F2:B3:21:C8:E6 10.14.2.184 
-# IA697 98:F2:B3:E9:ED:48 10.14.2.185 
-
 def parse_args():
 	global iLO_https_url
 	global iLO_account
@@ -127,8 +124,8 @@ if __name__ == "__main__":
 	data = json.load(open(data_file))
 	data['ServerAssetTag'] = asset_tag
 
-	set_asset_tag(REDFISH_OBJ, asset_tag)
 	set_bios_attr(REDFISH_OBJ, data)
+	set_asset_tag(REDFISH_OBJ, asset_tag)
 	if reboot_flag:
 		reboot_server(REDFISH_OBJ)
 
