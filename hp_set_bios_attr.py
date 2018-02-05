@@ -64,8 +64,7 @@ def set_bios_attr(redfishobj, bios_data, bios_password=None):
 			else:
 				body = {"Attributes": bios_data}
 
-			response = redfishobj.redfish_patch(instance["@odata.id"], body, \
-												optionalpassword=bios_password)
+			response = redfishobj.redfish_patch(instance["@odata.id"], body, optionalpassword=bios_password)
 			redfishobj.error_handler(response)
 
 def reboot_server(redfishobj, bios_password=None):
@@ -114,8 +113,7 @@ if __name__ == "__main__":
 	try:
 		REDFISH_OBJ = RedfishObject(iLO_https_url, iLO_account, iLO_password)
 	except ServerDownOrUnreachableError as excp:
-		sys.stderr.write("ERROR: server not reachable or doesn't support " \
-																"RedFish.\n")
+		sys.stderr.write("ERROR: server not reachable or doesn't support RedFish.\n")
 		sys.exit()
 	except Exception as excp:
 		raise excp
