@@ -1,0 +1,10 @@
+defscrollback 20000
+vbell off
+vbellwait 0
+bufferfile /tmp/screen_buffer.pdam
+maptimeout 0
+termcapinfo xterm* ti@:te@
+termcapinfo xterm*|rxvt*|kterm*|Eterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+hardstatus off
+ignorecase on
+setenv SSH_AUTH_SOCK $HOME/tmp/SSH_AUTH_SOCK

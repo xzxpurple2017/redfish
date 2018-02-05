@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ip=$(curl -s http://icanhazip.com)
+retcode=$?
+
+if [[ $retcode -eq 0 ]] ; then
+	echo "External IP is $ip"
+else
+	echo "Could not get external IP."
+	exit 1
+fi

@@ -1,0 +1,89 @@
+#!/usr/bin/perl
+
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Crypt::Eksblowfish::Bcrypt qw(bcrypt bcrypt_hash en_base64);
+use Term::ReadKey;
+use Data::Dumper qw(Dumper);
+
+# Requires perl-Crypt-Eksblowfish.x86_64
+
+# Defining differnet command line paramters and usage below.
+
+my $usage = << 'EOF';
+Usage: eksblowfish-crypt [OPTION]...
+
+Encrypt a password using Eksblowfish cipher.
+
+  -h, --help              Print this message and exit
+  -v, --version           Print the version information and exit
+
+EOF
+
+my $version = '';
+my $help    = '';
+
+GetOptions ("help"    => \$help,
+	    "version" => \$version)
+or die("Usage: eksblowfish-crypt [OPTION]...\nTry eksblowfish-crypt -h, --help for more information.\n");
+
+my $password1;
+my $password2;
+
+if ($help) {
+    print "$usage\n";
+} elsif ($version) {
+    print "3.1.0\n";
+} else {
+    print "Please enter your desired password now:\n";
+    user_enter_passwd();
+    create_hash();
+} 
+
+sub user_enter_passwd {
+    ReadMode 'noecho';
+    $password1 = ReadLine 0;
+    chomp $password1;
+    ReadMode 'normal'; 
+
+    print "Please enter again to confirm\n";
+    
+    ReadMode 'noecho';
+    $password2 = ReadLine 0;
+    chomp $password2;
+    ReadMode 'normal';
+
+    if ($password1 eq '') {
+        print "\nPassword is empty\n";
+    } elsif ($password1 eq $password2) {
+#        print "\nPassword is entered and confirmed!\n";
+    } else {
+        print "\nMissmatched passwords -- please try and enter again\n";
+        user_enter_passwd();
+    }
+
+}
+
+sub create_hash {
+    my $salt = '';
+    for my $i (0..15) {
+        $salt .= chr(rand(256));
+    }
+
+    my $hash = bcrypt_hash({
+        key_nul => 1,
+        cost    => 8,
+        salt    => $salt,
+    }, $password1);
+
+    # or
+
+    my $salt_base64 = en_base64($salt);
+    my $string = bcrypt($password1, "\$2a\$10\$$salt_base64");
+
+    print "\nEksblowfish hash:\n$string\n\n";
+}
+
+exit 0

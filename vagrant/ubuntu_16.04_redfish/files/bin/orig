@@ -1,0 +1,23 @@
+#!/bin/bash
+
+files="$@"
+
+if [[ $files = '' ]] ; then
+	echo -e "This is a script to create original backups of files.\nPlease run before making changes to configs."
+fi
+
+# Sudo is only needed if not already running as root
+# This automatically prompts for sudo password if not root
+[ `id -u` -eq 0 ]  &&  SUDO=  ||  SUDO=/usr/bin/sudo
+
+for i in $files ; do
+	$SUDO cp -p ${i} ${i}.orig~
+	ret=$?
+	if [[ $ret -eq 0 ]] ; then
+		echo "## SUCCESS -- ${i} has been orig-ed"
+	else
+		echo "## ERROR -- ${i} could not be orig-ed! Code $ret"
+		exit 1
+	fi
+done
+

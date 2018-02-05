@@ -1,0 +1,21 @@
+#!/bin/bash
+
+prog_name=$( basename $0 )
+
+declare -a mods_to_check=("$@")
+
+if [[ ${#mods_to_check[@]} = 0 ]] ; then
+	echo -e "Script used to check if Perl module is installed on system\n\nUsage: $prog_name PERL_MOD1 PERL_MOD2 ... PERL_MODN"
+fi
+
+for e in ${mods_to_check[@]} ; do
+	perl -e "use ${e}" > /dev/null 2>&1
+	ret=$?
+	if [ $ret = 0 ] ; then
+		echo "##INFO -- $e is installed"
+	else
+		echo "##WARN -- $e is NOT installed"
+	fi
+done
+
+

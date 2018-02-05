@@ -1,0 +1,21 @@
+#!/bin/bash
+
+red='\033[0;31m'
+green='\033[0;32m'
+NC='\033[0m' # No Color
+
+PROGNAME=$(basename "$0")
+HOST=$1
+PORT=$2
+
+if [[ -z $PORT ]] ; then
+	echo "Usage: $PROGNAME HOST PORT"
+	exit 1
+fi
+
+var=$(nmap -Pn -p$PORT $HOST | awk "\$1 ~ /$PORT/ {print \$2}" | grep open)
+if [[ -n $var ]] ; then
+	echo -e "Port $PORT on host $HOST is ${green}${var}${NC}"
+else
+	echo -e "Port $PORT on host $HOST is ${red}NOT OPEN${NC}"
+fi

@@ -1,0 +1,119 @@
+#!/bin/bash
+#
+#
+# Remotely manage servers out of band from terminal.
+
+die () { ret=$1 ; shift ; echo -e "$@" >&2 ; exit $ret ; }
+
+# Disable filename globbing.
+set -f
+
+# Sanity check.
+# Check if ipmitool is installed.
+tool_location_linux='/usr/bin/ipmitool'
+tool_location_mac='/usr/local/bin/ipmitool'
+[[ -f ${tool_location_linux} ]] || [[ -f ${tool_location_mac} ]] ||  die 1 "ipmitool not installed -- ${tool_location} not present!"
+
+clear 
+
+read -d '' usage <<"EOF"
+############################################################
+# Consoletool -- Tool for interacting with server via IPMI #
+############################################################
+Please choose from the options below:
+
+1) Power on server
+2) Power off server
+3) Reset server
+4) Power cycle
+5) Remote serial
+6) Boot into BIOS
+7) Turn on LED
+8) Refresh
+9) Exit tool
+EOF
+
+echo -e "$usage\n"
+
+consoletool () {
+
+# Functions we will call later to interact with remote BMC.
+# The ipmi variable is defined further down in the if statement.
+# Press \ followed by . to escape remote serial session.
+
+status () {
+$ipmi chassis power status
+}
+
+on () {
+$ipmi chassis power on
+}
+
+off () {
+$ipmi chassis power off
+}
+
+reset () {
+$ipmi chassis power reset
+}
+
+cycle () {
+$ipmi chassis power cycle
+}
+
+sol () {
+$ipmi sol activate
+}
+
+bios () {
+$ipmi chassis bootparam set bootflag force_bios
+}
+
+lights () {
+$ipmi chassis identify 120
+}
+
+if [[ -z $1 ]] ; then                                               
+    echo -e "Please enter IPMI IP address"         
+    echo -e "Example: consoletool 192.168.1.1\n" 
+    echo -e "Exiting program now!"                 
+    exit 1                                         
+elif [[ -n $1 ]] ; then                                               
+    ipmi_host=$1 
+	echo -e "Please enter username:"
+	read username
+	echo -e "\nPlease enter password:"
+	read -s password
+
+	# TODO: Store counter of # of times for auth failure and exit after 3 tries. Store error message and do not output to stdout.
+	# TODO: Require user to enter creds before displaying usage info. 
+    ipmi="ipmitool -I lanplus -H $ipmi_host -U $username -P $password -e \x"
+    status
+    read options                                   
+    echo -e ""
+fi                                                 
+
+# These cases interpret user input to decide which function to call.
+
+case $options in 
+    "1") on                                       ;;
+    "2") off                                      ;; 
+    "3") reset                                    ;;
+    "4") cycle                                    ;;
+    "5") sol                                      ;;
+    "6") bios && reset && sol                     ;;
+    "7") lights                                   ;;
+    "8")                                          ;;
+    "9") exit 0                                   ;;
+    *) die 1 "Incorrect option"                ;;
+esac
+
+}
+
+# This will put the main function into a loop so the program doesn't exit when an option is entered.
+# It should be the only way for the user to exit is to press 9 or Ctrl-C.
+
+while true; do
+    consoletool $1
+    sleep 1
+done

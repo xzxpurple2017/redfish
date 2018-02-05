@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  #config.vm.box = "bento/ubuntu-16.04"
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_check_update = true
+  config.vm.hostname = "ubuntu-vm1"
+  config.vm.network "private_network", type: "dhcp", nic_type: "virtio"
+  config.ssh.forward_agent = true
+  config.vm.provider :virtualbox do |vb|
+    vb.name = "vagrant_ubuntu_16.04_vm1"
+    vb.memory = 3072
+    vb.cpus = 3
+    vb.customize ["modifyvm", :id, "--nictype1", "virtio" ]
+    vb.customize ["modifyvm", :id, "--nictype2", "virtio" ]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
+
+  config.vm.provision "file", source: "files/", destination: "/tmp/provision_files/"
+  config.vm.provision "shell", inline: <<-SHELL
+    cp    /tmp/provision_files/files/template_bash_aliases /home/vagrant/.bash_aliases
+    cp    /tmp/provision_files/files/template_bash_functions /home/vagrant/.bash_functions
+    cp    /tmp/provision_files/files/template_bashrc /home/vagrant/.bashrc
+    cp    /tmp/provision_files/files/template_inputrc /home/vagrant/.inputrc
+    cp    /tmp/provision_files/files/template_profile /home/vagrant/.profile
+    cp    /tmp/provision_files/files/template_screenrc /home/vagrant/.screenrc
+    cp    /tmp/provision_files/files/template_vimrc /home/vagrant/.vimrc
+    cp -R /tmp/provision_files/files/bin /home/vagrant/bin
+    chmod -R 700 /home/vagrant/bin
+    chown -R vagrant:vagrant /home/vagrant/bin
+  SHELL
+  config.vm.provision :shell, path: "scripts/provision_users.sh", :privileged => true
+  config.vm.provision :shell, path: "scripts/provision_redfish.sh", :privileged => true
+
+  config.ssh.username = "vagrant"
+  config.ssh.insert_key = true
+
+  config.vm.provision "shell", inline: "usermod -g hackers vagrant", :privileged => true
+
+  # Check guest tools version using vagrant-vbguest plugin
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = true
+    config.vbguest.no_remote = false
+  else 
+    raise 'Please install vagrant-vbguest plugin! `vagrant plugin install vagrant-vbguest`'
+  end
+end
