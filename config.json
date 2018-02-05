@@ -2,9 +2,13 @@
   "AdminEmail" : "pdam@intacct.com",
   "AdminName" : "bob",
   "AdminOtherInfo" : "Site Reliability Engineer",
+  "AssetTagProtection": "Unlocked",
+  "BootMode": "LegacyBios",
+  "DynamicPowerCapping": "Disabled",
+  "ExtendedMemTest": "Disabled",
+  "ProcHyperthreading" : "Disabled",
   "ThermalConfig": "IncreasedCooling",
   "ThermalShutdown": "Disabled",
   "TimeFormat": "Utc",
   "TimeZone": "Utc0",
-  "ProcHyperthreading" : "Disabled"
 }
