@@ -1,0 +1,10 @@
+{
+  "AdminEmail" : "pdam@intacct.com",
+  "AdminName" : "bob",
+  "AdminOtherInfo" : "Site Reliability Engineer",
+  "ThermalConfig": "IncreasedCooling",
+  "ThermalShutdown": "Disabled",
+  "TimeFormat": "Utc",
+  "TimeZone": "Utc0",
+  "ProcHyperthreading" : "Disabled"
+}
