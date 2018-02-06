@@ -185,20 +185,22 @@ if __name__ == "__main__":
 	# This is to prevent setting changes midway during POST, when other changes
 	# could be going on
 	counter = 0
+	interval = 2
 	max_count = 600
 	# Wait 10 minutes for server to finish up POST
+	# Increment every 2 seconds
 	# This could be due to resetting BIOS to factory defaults, which takes a 
 	# long time to complete
+	print("\n---------\nServer in POST\n")
 	while counter <= max_count:
-		time.sleep(5)
+		time.sleep(interval)
 		#print (get_post_state(REDFISH_OBJ))
 		if get_post_state(REDFISH_OBJ) == "FinishedPost" or \
 					get_post_state(REDFISH_OBJ) == "InPostDiscoveryComplete":
 			break
-		counter = counter + 5
+		counter = counter + interval
 		remainder = max_count - counter
 		s = str(remainder) + ' seconds remaining'
-		print("\n---------\nServer in POST\n")
 		print(s, end='')
 		print('\r', end='')
 	else:
