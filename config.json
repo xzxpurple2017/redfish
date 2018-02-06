@@ -10,5 +10,5 @@
   "ThermalConfig": "IncreasedCooling",
   "ThermalShutdown": "Disabled",
   "TimeFormat": "Utc",
-  "TimeZone": "Utc0",
+  "TimeZone": "Utc0"
 }
