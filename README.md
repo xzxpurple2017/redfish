@@ -20,10 +20,13 @@ Just make sure that you have the following on your computer.
 
 Once you are ready, navigate into the directory with the vagrant file. 
 ```cd redfish/vagrant/ubuntu_16.04_redfish/```
+
 Now, bring the VM up:
 ```vagrant up```
+
 Once it is up and provisioned, you can remote into the VM:
 ```vagrant ssh```
+
 From there, you can either find the IP address and SSH into the VM using the
 host-accessible IP or just git clone this repository inside the guest. Then,
 you can start running the Redfish scripts. Just make sure that your guest VM 
