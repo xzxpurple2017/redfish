@@ -5,9 +5,11 @@
 # https://github.com/HewlettPackard/python-ilorest-library/tree/master/examples/Redfish
 #
 #
+import io
 import os
 import sys
 import json
+import time
 import argparse
 from _redfishobject import RedfishObject
 from redfish.rest.v1 import ServerDownOrUnreachableError
@@ -19,6 +21,7 @@ def parse_args():
 	global asset_tag
 	global reboot_flag
 	global data_file
+	global default
 
 	parser = argparse.ArgumentParser(
 		description='Set BIOS attributes for HPE Gen9 and Gen10 servers',
@@ -30,6 +33,7 @@ def parse_args():
 	parser.add_argument('-p', '--password', help='Enter password', required=True)
 	parser.add_argument('-f', '--file', help='Path to JSON config file', required=True)
 	parser.add_argument('-r', '--reboot', help='Toggle to reboot', action='store_true')
+	parser.add_argument('-d', '--default', help='Reset BIOS to factory defaults', action='store_true')
 	args = vars(parser.parse_args())
 
 	iLO_https_url = 'https://' + args['ip'] 
@@ -38,9 +42,27 @@ def parse_args():
 	asset_tag = args['asset']
 	data_file = args['file']
 	reboot_flag = args['reboot']
+	default = args['default']
+
+def get_post_state(redfishobj):
+	# Different POST states below:
+	# 
+	# [*] PowerOff
+	# [*] InPost
+	# [*] InPostDiscoveryComplete
+	# [*] FinishedPost
+	#
+	instances = redfishobj.search_for_type("ComputerSystem.")
+
+	for instance in instances:
+		response = REDFISH_OBJ.redfish_get(instance["@odata.id"])
+		#redfishobj.error_handler(response)
+		post_state = response.dict["Oem"]["Hpe"]["PostState"]
+
+	return post_state
 
 def set_asset_tag(redfishobj, asset_tag):
-	sys.stdout.write("\n---------\nSet Computer Asset Tag:\n")
+	print("\n---------\nSet Computer Asset Tag:\n")
 	instances = redfishobj.search_for_type("ComputerSystem.")
 
 	for instance in instances:
@@ -49,7 +71,7 @@ def set_asset_tag(redfishobj, asset_tag):
 		redfishobj.error_handler(response)
 
 def set_bios_attr(redfishobj, bios_data, bios_password=None):
-	sys.stdout.write("\n---------\nSetting BIOS attributes:\n")
+	print("\n---------\nSetting BIOS attributes:\n")
 	instances = redfishobj.search_for_type("Bios.")
 	#print (instances)
 	if not len(instances) and redfishobj.typepath.defs.isgen9:
@@ -68,7 +90,7 @@ def set_bios_attr(redfishobj, bios_data, bios_password=None):
 			redfishobj.error_handler(response)
 
 def reboot_server(redfishobj, bios_password=None):
-	sys.stdout.write("\n---------\nRebooting server\n")
+	print("\n---------\nRebooting server\n")
 	instances = redfishobj.search_for_type("ComputerSystem.")
 
 	if redfishobj.typepath.defs.isgen9:
@@ -93,6 +115,33 @@ def reboot_server(redfishobj, bios_password=None):
 
 			response = redfishobj.redfish_post(path, body)
 			redfishobj.error_handler(response)
+
+def power_on_server(redfishobj, bios_password=None):
+    print("\n---------\nPowering on server\n")
+    instances = redfishobj.search_for_type("ComputerSystem.")
+
+    if redfishobj.typepath.defs.isgen9:
+        for instance in instances:
+            body = dict()
+            body["Action"] = "Reset"
+            body["ResetType"] = "On"
+
+            response = redfishobj.redfish_post(instance["@odata.id"], body)
+            redfishobj.error_handler(response)
+    else:
+        for instance in instances:
+            resp = redfishobj.redfish_get(instance['@odata.id'])
+            if resp.status==200:
+                body = dict()
+                body["Action"] = "ComputerSystem.Reset"
+                body["ResetType"] = "On"
+                path = resp.dict["Actions"]["#ComputerSystem.Reset"]["target"]
+            else:
+                sys.stderr.write("ERROR: Unable to find the path for power on.")
+                raise
+
+            response = redfishobj.redfish_post(path, body)
+            redfishobj.error_handler(response)
 
 
 if __name__ == "__main__":
@@ -121,6 +170,42 @@ if __name__ == "__main__":
 	# Parse JSON config file for BIOS attributes
 	data = json.load(open(data_file))
 	data['ServerAssetTag'] = asset_tag
+	data['ServerName'] = "mgmt-" + asset_tag + ".intacct.com"
+
+	if get_post_state(REDFISH_OBJ) == "PowerOff":
+		power_on_server(REDFISH_OBJ)
+
+	# Reset BIOS to factory defaults if user decides to
+	if default:
+		set_bios_attr(REDFISH_OBJ, {"RestoreManufacturingDefaults":"Yes"})
+		if get_post_state(REDFISH_OBJ) != "PowerOff":
+			reboot_server(REDFISH_OBJ)
+
+	# Configure BIOS settings only if server is powered off or done with POST
+	# This is to prevent setting changes midway during POST, when other changes
+	# could be going on
+	counter = 0
+	max_count = 600
+	# Wait 10 minutes for server to finish up POST
+	# This could be due to resetting BIOS to factory defaults, which takes a 
+	# long time to complete
+	while counter <= max_count:
+		time.sleep(5)
+		#print (get_post_state(REDFISH_OBJ))
+		if get_post_state(REDFISH_OBJ) == "FinishedPost" or \
+					get_post_state(REDFISH_OBJ) == "InPostDiscoveryComplete":
+			break
+		counter = counter + 5
+		remainder = max_count - counter
+		s = str(remainder) + ' seconds remaining'
+		print("\n---------\nServer in POST\n")
+		print(s, end='')
+		print('\r', end='')
+	else:
+		print("\n---------\n")
+		print("Server timed out while POSTing")
+		print("Please power off manually or check console")
+		sys.exit(1)
 
 	set_bios_attr(REDFISH_OBJ, data)
 	set_asset_tag(REDFISH_OBJ, asset_tag)
