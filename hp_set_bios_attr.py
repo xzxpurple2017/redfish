@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 #
 # This script configures HPE BIOS attributes
+# Tested on following hardware:
+# 
+# [*] HPE DL360 G10  
+# [*] HPE DL380 G10
+#
 # Inspired by scripts published by HPE here:
 # https://github.com/HewlettPackard/python-ilorest-library/tree/master/examples/Redfish
 #
@@ -188,7 +193,7 @@ if __name__ == "__main__":
 	interval = 1
 	max_count = 600
 	# Wait 10 minutes for server to finish up POST
-	# Increment every 2 seconds
+	# Increment every second
 	# This could be due to resetting BIOS to factory defaults, which takes a 
 	# long time to complete
 	print("\n---------\n")
