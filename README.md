@@ -15,10 +15,10 @@ There is a handy Vagrant file in this repository and various provisioner
 scripts and files to create a ready-made VM for your testing. 
 Just make sure that you have the following on your computer.
 * [Vagrant](https://www.vagrantup.com/downloads.html) - Also, install the plugin: `vagrant plugin install vagrant-vbguest`
-* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) - I recommend downloading and install the extension pack
+* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) - I recommend downloading and installing the extension pack too
 * [Working internet connection](https://en.wikipedia.org/wiki/Internet) - You will need this to download Redfish packages
 
-Once you are ready, navigate into the directory with the vagrant file. 
+First, git clone this repository. Then, navigate into the directory with the vagrant file. 
 ```cd redfish/vagrant/ubuntu_16.04_redfish/```
 
 Now, bring the VM up:
@@ -27,9 +27,8 @@ Now, bring the VM up:
 Once it is up and provisioned, you can remote into the VM:
 ```vagrant ssh```
 
-From there, you can either find the IP address and SSH into the VM using the
-host-accessible IP or just git clone this repository inside the guest. Then,
-you can start running the Redfish scripts. Just make sure that your guest VM 
+Now git clone this repository inside the guest. Then, you can start running 
+the Redfish scripts. Just make sure that your guest VM 
 can communicate with the server management interface.
 
 ## Documentation
