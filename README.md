@@ -34,4 +34,5 @@ can communicate with the server management interface.
 
 ## Documentation
 
-HPE API doc (https://hewlettpackard.github.io/ilo-rest-api-docs/ilo5/#introduction)
+* [HPE API doc](https://hewlettpackard.github.io/ilo-rest-api-docs/ilo5/#introduction) 
+* [Dell paper](http://en.community.dell.com/techcenter/systems-management/w/wiki/12213.redfish)
