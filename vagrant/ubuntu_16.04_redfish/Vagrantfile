@@ -20,13 +20,13 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "file", source: "files/", destination: "/tmp/provision_files/"
   config.vm.provision "shell", inline: <<-SHELL
-    cp    /tmp/provision_files/files/template_bash_aliases /home/vagrant/.bash_aliases
-    cp    /tmp/provision_files/files/template_bash_functions /home/vagrant/.bash_functions
-    cp    /tmp/provision_files/files/template_bashrc /home/vagrant/.bashrc
-    cp    /tmp/provision_files/files/template_inputrc /home/vagrant/.inputrc
-    cp    /tmp/provision_files/files/template_profile /home/vagrant/.profile
-    cp    /tmp/provision_files/files/template_screenrc /home/vagrant/.screenrc
-    cp    /tmp/provision_files/files/template_vimrc /home/vagrant/.vimrc
+    cp /tmp/provision_files/files/template_bash_aliases /home/vagrant/.bash_aliases
+    cp /tmp/provision_files/files/template_bash_functions /home/vagrant/.bash_functions
+    cp /tmp/provision_files/files/template_bashrc /home/vagrant/.bashrc
+    cp /tmp/provision_files/files/template_inputrc /home/vagrant/.inputrc
+    cp /tmp/provision_files/files/template_profile /home/vagrant/.profile
+    cp /tmp/provision_files/files/template_screenrc /home/vagrant/.screenrc
+    cp /tmp/provision_files/files/template_vimrc /home/vagrant/.vimrc
     cp -R /tmp/provision_files/files/bin /home/vagrant/bin
     chmod -R 700 /home/vagrant/bin
     chown -R vagrant:vagrant /home/vagrant/bin
@@ -47,3 +47,5 @@ Vagrant.configure("2") do |config|
     raise 'Please install vagrant-vbguest plugin! `vagrant plugin install vagrant-vbguest`'
   end
 end
+
+# vim: set fileformat=unix

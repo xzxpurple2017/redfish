@@ -12,7 +12,7 @@ function gen_passwd {
 # Add custom users below
 # IMPORTANT! Be sure to change any relvant groups depending on Linux distribution
 # For example, Ubuntu uses 'sudo' and 'admin' groups while Centos uses 'wheel' group
-declare -A users_hash=( ["bob"]="hackers sudo admin" )
+declare -A users_hash=( ["philip"]="hackers sudo admin" )
 
 function die () { ret=$1 ; shift ; echo "FATAL ERROR: ""$@" ; exit $ret ; }
 
@@ -98,12 +98,12 @@ for key in ${!users_hash[@]} ; do
 	# Again, we moved a bunch of files to /tmp/provision_files/
 	echo "## INFO -- Setting home profiles for ${key}"
 	
-    (cp     /tmp/provision_files/files/template_bash_aliases /home/${key}/.bash_aliases || die "## ERROR -- Could not copy bash_aliases for ${key}") && \
-    (cp     /tmp/provision_files/files/template_bashrc /home/${key}/.bashrc || die "## ERROR -- Could not copy bashrc for ${key}") && \
-    (cp     /tmp/provision_files/files/template_inputrc /home/${key}/.inputrc || die "## ERROR -- Could not copy inputrc for ${key}") && \
-    (cp     /tmp/provision_files/files/template_profile /home/${key}/.profile || die "## ERROR -- Could not copy profile for ${key}") && \
-    (cp     /tmp/provision_files/files/template_screenrc /home/${key}/.screenrc || die "## ERROR -- Could not copy screenrc for ${key}") && \
-    (cp     /tmp/provision_files/files/template_vimrc /home/${key}/.vimrc || die "## ERROR -- Could not copy vimrc for ${key}") && \
+    (cp /tmp/provision_files/files/template_bash_aliases /home/${key}/.bash_aliases || die "## ERROR -- Could not copy bash_aliases for ${key}") && \
+    (cp /tmp/provision_files/files/template_bashrc /home/${key}/.bashrc || die "## ERROR -- Could not copy bashrc for ${key}") && \
+    (cp /tmp/provision_files/files/template_inputrc /home/${key}/.inputrc || die "## ERROR -- Could not copy inputrc for ${key}") && \
+    (cp /tmp/provision_files/files/template_profile /home/${key}/.profile || die "## ERROR -- Could not copy profile for ${key}") && \
+    (cp /tmp/provision_files/files/template_screenrc /home/${key}/.screenrc || die "## ERROR -- Could not copy screenrc for ${key}") && \
+    (cp /tmp/provision_files/files/template_vimrc /home/${key}/.vimrc || die "## ERROR -- Could not copy vimrc for ${key}") && \
     (cp -Rp /tmp/provision_files/files/bin /home/${key}/bin || die "## ERROR -- Could not copy ~/bin scripts for ${key}") && \
 	(chown -R ${key}:${primary_group} /home/${key}/bin || die "## ERROR -- Could not change ownership of ~/bin scripts for ${key}") && \
 	(chmod -R 700 /home/${key}/bin || die "## ERROR -- Could not change permissions of ~/bin scripts for ${key}")
@@ -114,3 +114,4 @@ done
 [[ -d /tmp/provision_files/ ]] && rm -rf /tmp/provision_files/
 
 # vim: ts=4 sw=4
+# vim: set fileformat=unix
