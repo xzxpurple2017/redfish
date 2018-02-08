@@ -13,7 +13,10 @@ set -o emacs
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
+HISTTIMEFORMAT="%m/%d/%y %T "
 shopt -s histappend
+PROMPT_COMMAND='printf "\033]0;%s:%s\007" "${USER}@`hostname -s`" "${PWD/#$HOME/~}"'
+PROMPT_COMMAND="history -a;history -n;$PROMPT_COMMAND"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000

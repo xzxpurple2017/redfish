@@ -1,0 +1,184 @@
+2018-02-06 06:18:17,571 - redfish - INFO - HPE Redfish API examples
+2018-02-06 06:18:48,376 - redfish - INFO - HPE Redfish API examples
+2018-02-06 06:18:48,378 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1
+2018-02-06 06:18:48,659 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.001901999999999987 seconds.
+2018-02-06 06:18:48,960 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.001583000000000001 seconds.
+2018-02-06 06:18:48,962 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:18:49,282 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0020120000000000138 seconds.
+2018-02-06 06:18:49,284 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:18:49,600 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.001590000000000008 seconds.
+2018-02-06 06:18:49,601 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/
+2018-02-06 06:18:50,135 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/: 0.0010199999999999931 seconds.
+2018-02-06 06:18:50,136 - redfish.rest.v1 - INFO - {'error': {'@Message.ExtendedInfo': [{'MessageId': 'Base.1.0.Created'}], 'code': 'iLO.0.10.ExtendedInfo', 'message': 'See @Message.ExtendedInfo for more information.'}}
+2018-02-06 06:18:50,137 - redfish.rest.v1 - INFO - Login returned code 201: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Created"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:18:50,137 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/resourcedirectory/
+2018-02-06 06:18:50,538 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/resourcedirectory/: 0.0009010000000000129 seconds.
+2018-02-06 06:18:50,584 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/
+2018-02-06 06:18:50,889 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/: 0.0013440000000000119 seconds.
+2018-02-06 06:18:50,890 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/Base/
+2018-02-06 06:18:51,185 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/Base/: 0.0008739999999999859 seconds.
+2018-02-06 06:18:51,188 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/Base.json/
+2018-02-06 06:18:51,521 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/Base.json/: 0.0006489999999999829 seconds.
+2018-02-06 06:18:51,527 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/iLO/
+2018-02-06 06:18:51,798 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/iLO/: 0.0005890000000000062 seconds.
+2018-02-06 06:18:51,798 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/iLO.json/
+2018-02-06 06:18:52,071 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/iLO.json/: 0.0011929999999999996 seconds.
+2018-02-06 06:18:52,095 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/systems/1/bios/settings/
+2018-02-06 06:18:52,711 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/systems/1/bios/settings/: 0.0009009999999999851 seconds.
+2018-02-06 06:18:52,714 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/systems/1/bios/settings/
+2018-02-06 06:18:53,273 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/systems/1/bios/settings/: 0.0010729999999999906 seconds.
+2018-02-06 06:18:53,276 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:18:53,823 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0009000000000000119 seconds.
+2018-02-06 06:18:53,826 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:18:54,113 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0006499999999999839 seconds.
+2018-02-06 06:18:54,114 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/
+2018-02-06 06:18:54,639 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/: 0.0013719999999999843 seconds.
+2018-02-06 06:18:54,641 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/administrator000000005a7948c831e3dc5d/
+2018-02-06 06:18:55,043 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/administrator000000005a7948c831e3dc5d/: 0.0010100000000000109 seconds.
+2018-02-06 06:18:55,044 - redfish.rest.v1 - INFO - User logged out: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Success"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:24:48,596 - redfish - INFO - HPE Redfish API examples
+2018-02-06 06:24:48,599 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1
+2018-02-06 06:24:48,883 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.001593000000000011 seconds.
+2018-02-06 06:24:49,263 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.0017280000000000073 seconds.
+2018-02-06 06:24:49,266 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:24:49,534 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0006110000000000004 seconds.
+2018-02-06 06:24:49,548 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:24:49,848 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0005880000000000052 seconds.
+2018-02-06 06:24:49,852 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/
+2018-02-06 06:24:50,354 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/: 0.0006769999999999832 seconds.
+2018-02-06 06:24:50,354 - redfish.rest.v1 - INFO - {'error': {'message': 'See @Message.ExtendedInfo for more information.', 'code': 'iLO.0.10.ExtendedInfo', '@Message.ExtendedInfo': [{'MessageId': 'Base.1.0.Created'}]}}
+2018-02-06 06:24:50,354 - redfish.rest.v1 - INFO - Login returned code 201: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Created"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:24:50,354 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/resourcedirectory/
+2018-02-06 06:24:50,849 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/resourcedirectory/: 0.0005070000000000074 seconds.
+2018-02-06 06:24:50,917 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/
+2018-02-06 06:24:51,220 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/: 0.0005830000000000002 seconds.
+2018-02-06 06:24:51,221 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/Base/
+2018-02-06 06:24:51,533 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/Base/: 0.0012190000000000256 seconds.
+2018-02-06 06:24:51,534 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/Base.json/
+2018-02-06 06:24:51,820 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/Base.json/: 0.0004899999999999904 seconds.
+2018-02-06 06:24:51,822 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/iLO/
+2018-02-06 06:24:52,125 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/iLO/: 0.0005249999999999977 seconds.
+2018-02-06 06:24:52,128 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/iLO.json/
+2018-02-06 06:24:52,387 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/iLO.json/: 0.0006120000000000014 seconds.
+2018-02-06 06:24:52,406 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/systems/1/bios/settings/
+2018-02-06 06:24:53,028 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/systems/1/bios/settings/: 0.0008330000000000004 seconds.
+2018-02-06 06:24:53,031 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:24:53,599 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0005989999999999607 seconds.
+2018-02-06 06:24:53,603 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:24:53,901 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0011240000000000139 seconds.
+2018-02-06 06:24:53,907 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/
+2018-02-06 06:24:54,422 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/: 0.0015879999999999783 seconds.
+2018-02-06 06:24:54,424 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/administrator000000005a794a305c63c19d/
+2018-02-06 06:24:57,790 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/administrator000000005a794a305c63c19d/: 0.0012159999999999949 seconds.
+2018-02-06 06:24:57,791 - redfish.rest.v1 - INFO - User logged out: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Success"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:34:45,510 - redfish - INFO - HPE Redfish API examples
+2018-02-06 06:34:45,513 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1
+2018-02-06 06:34:45,859 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.0011579999999999924 seconds.
+2018-02-06 06:34:46,132 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.0008019999999999972 seconds.
+2018-02-06 06:34:46,135 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:34:46,406 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0006120000000000014 seconds.
+2018-02-06 06:34:46,407 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:34:46,675 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0007139999999999924 seconds.
+2018-02-06 06:34:46,676 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/
+2018-02-06 06:34:47,185 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/: 0.0006980000000000042 seconds.
+2018-02-06 06:34:47,185 - redfish.rest.v1 - INFO - {'error': {'code': 'iLO.0.10.ExtendedInfo', '@Message.ExtendedInfo': [{'MessageId': 'Base.1.0.Created'}], 'message': 'See @Message.ExtendedInfo for more information.'}}
+2018-02-06 06:34:47,186 - redfish.rest.v1 - INFO - Login returned code 201: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Created"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:34:47,186 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/resourcedirectory/
+2018-02-06 06:34:47,616 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/resourcedirectory/: 0.0004880000000000162 seconds.
+2018-02-06 06:34:47,663 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/
+2018-02-06 06:34:48,026 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/: 0.0009349999999999914 seconds.
+2018-02-06 06:34:48,027 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/Base/
+2018-02-06 06:34:48,305 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/Base/: 0.0010189999999999921 seconds.
+2018-02-06 06:34:48,307 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/Base.json/
+2018-02-06 06:34:48,596 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/Base.json/: 0.0010310000000000041 seconds.
+2018-02-06 06:34:48,600 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/iLO/
+2018-02-06 06:34:48,855 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/iLO/: 0.0005940000000000112 seconds.
+2018-02-06 06:34:48,857 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/iLO.json/
+2018-02-06 06:34:49,111 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/iLO.json/: 0.0005830000000000002 seconds.
+2018-02-06 06:34:49,132 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/systems/1/bios/settings/
+2018-02-06 06:34:49,738 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/systems/1/bios/settings/: 0.0008890000000000009 seconds.
+2018-02-06 06:34:49,741 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:34:50,306 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0012599999999999834 seconds.
+2018-02-06 06:34:50,307 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:34:50,586 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0014079999999999926 seconds.
+2018-02-06 06:34:50,587 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/
+2018-02-06 06:34:51,135 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/: 0.0005290000000000017 seconds.
+2018-02-06 06:34:51,137 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/administrator000000005a794c853359aef8/
+2018-02-06 06:34:51,486 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/administrator000000005a794c853359aef8/: 0.0006510000000000127 seconds.
+2018-02-06 06:34:51,489 - redfish.rest.v1 - INFO - User logged out: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Success"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:42:20,051 - redfish - INFO - HPE Redfish API examples
+2018-02-06 06:42:20,053 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1
+2018-02-06 06:42:20,308 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.0007479999999999987 seconds.
+2018-02-06 06:42:20,593 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.0008350000000000024 seconds.
+2018-02-06 06:42:20,595 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:42:20,867 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0008879999999999999 seconds.
+2018-02-06 06:42:20,877 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:42:21,163 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0005249999999999977 seconds.
+2018-02-06 06:42:21,165 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/
+2018-02-06 06:42:21,679 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/: 0.0006059999999999954 seconds.
+2018-02-06 06:42:21,681 - redfish.rest.v1 - INFO - {'error': {'@Message.ExtendedInfo': [{'MessageId': 'Base.1.0.Created'}], 'message': 'See @Message.ExtendedInfo for more information.', 'code': 'iLO.0.10.ExtendedInfo'}}
+2018-02-06 06:42:21,681 - redfish.rest.v1 - INFO - Login returned code 201: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Created"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:42:21,681 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/resourcedirectory/
+2018-02-06 06:42:22,375 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/resourcedirectory/: 0.0006649999999999989 seconds.
+2018-02-06 06:42:22,420 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/
+2018-02-06 06:42:22,747 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/: 0.0010070000000000079 seconds.
+2018-02-06 06:42:22,747 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/Base/
+2018-02-06 06:42:23,102 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/Base/: 0.0006840000000000179 seconds.
+2018-02-06 06:42:23,103 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/Base.json/
+2018-02-06 06:42:23,410 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/Base.json/: 0.0008060000000000012 seconds.
+2018-02-06 06:42:23,413 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/iLO/
+2018-02-06 06:42:23,694 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/iLO/: 0.0008319999999999994 seconds.
+2018-02-06 06:42:23,695 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/iLO.json/
+2018-02-06 06:42:23,956 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/iLO.json/: 0.0007880000000000109 seconds.
+2018-02-06 06:42:23,975 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/systems/1/bios/settings/
+2018-02-06 06:42:24,593 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/systems/1/bios/settings/: 0.0007319999999999827 seconds.
+2018-02-06 06:42:24,595 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:42:25,044 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.001220999999999972 seconds.
+2018-02-06 06:42:25,045 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/
+2018-02-06 06:42:25,563 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/: 0.0004959999999999964 seconds.
+2018-02-06 06:42:25,565 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/systems/1/bios/settings/
+2018-02-06 06:42:28,741 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/systems/1/bios/settings/: 0.0008429999999999827 seconds.
+2018-02-06 06:42:28,745 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:42:29,353 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0011339999999999684 seconds.
+2018-02-06 06:42:29,355 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:42:29,753 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0010259999999999714 seconds.
+2018-02-06 06:42:29,763 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/
+2018-02-06 06:42:30,297 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/: 0.0013929999999999776 seconds.
+2018-02-06 06:42:30,299 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/administrator000000005a794e4ba86eb4f2/
+2018-02-06 06:42:30,680 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/administrator000000005a794e4ba86eb4f2/: 0.0011220000000000119 seconds.
+2018-02-06 06:42:30,681 - redfish.rest.v1 - INFO - User logged out: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Success"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:46:48,021 - redfish - INFO - HPE Redfish API examples
+2018-02-06 06:46:48,025 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1
+2018-02-06 06:46:48,292 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.0007870000000000099 seconds.
+2018-02-06 06:46:48,586 - redfish.rest.v1 - INFO - Response Time to /redfish/v1: 0.0007139999999999924 seconds.
+2018-02-06 06:46:48,588 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:46:48,923 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0007640000000000147 seconds.
+2018-02-06 06:46:48,925 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/
+2018-02-06 06:46:49,186 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/: 0.0006390000000000007 seconds.
+2018-02-06 06:46:49,188 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/
+2018-02-06 06:46:49,672 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/: 0.001449999999999979 seconds.
+2018-02-06 06:46:49,673 - redfish.rest.v1 - INFO - {'error': {'@Message.ExtendedInfo': [{'MessageId': 'Base.1.0.Created'}], 'message': 'See @Message.ExtendedInfo for more information.', 'code': 'iLO.0.10.ExtendedInfo'}}
+2018-02-06 06:46:49,674 - redfish.rest.v1 - INFO - Login returned code 201: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Created"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
+2018-02-06 06:46:49,674 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/resourcedirectory/
+2018-02-06 06:46:50,250 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/resourcedirectory/: 0.0005290000000000017 seconds.
+2018-02-06 06:46:50,303 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/
+2018-02-06 06:46:50,662 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/: 0.0007570000000000077 seconds.
+2018-02-06 06:46:50,662 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/Base/
+2018-02-06 06:46:50,981 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/Base/: 0.0006359999999999977 seconds.
+2018-02-06 06:46:50,982 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/Base.json/
+2018-02-06 06:46:51,238 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/Base.json/: 0.0008239999999999914 seconds.
+2018-02-06 06:46:51,239 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Registries/iLO/
+2018-02-06 06:46:51,567 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Registries/iLO/: 0.0007059999999999844 seconds.
+2018-02-06 06:46:51,568 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/RegistryStore/registries/en/iLO.json/
+2018-02-06 06:46:51,858 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/RegistryStore/registries/en/iLO.json/: 0.0008269999999999667 seconds.
+2018-02-06 06:46:51,880 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/systems/1/bios/settings/
+2018-02-06 06:46:52,448 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/systems/1/bios/settings/: 0.0004890000000000172 seconds.
+2018-02-06 06:46:52,450 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:46:53,077 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.0006769999999999832 seconds.
+2018-02-06 06:46:53,078 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/
+2018-02-06 06:46:53,375 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/: 0.00047999999999998044 seconds.
+2018-02-06 06:46:53,379 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/
+2018-02-06 06:46:53,908 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/Systems/1/Actions/ComputerSystem.Reset/: 0.0006990000000000052 seconds.
+2018-02-06 06:46:53,909 - redfish.rest.v1 - INFO - Attempt 1 of /redfish/v1/SessionService/Sessions/administrator000000005a794f57bb4b2374/
+2018-02-06 06:46:54,496 - redfish.rest.v1 - INFO - Response Time to /redfish/v1/SessionService/Sessions/administrator000000005a794f57bb4b2374/: 0.0006070000000000242 seconds.
+2018-02-06 06:46:54,498 - redfish.rest.v1 - INFO - User logged out: {"error":{"@Message.ExtendedInfo":[{"MessageId":"Base.1.0.Success"}],"code":"iLO.0.10.ExtendedInfo","message":"See @Message.ExtendedInfo for more information."}}
