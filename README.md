@@ -4,7 +4,7 @@ Redfish API allows you to interact with server hardware, firmware, and
 management interfaces. It is an open standard currently adopted by many 
 server builders, such as HP Enterprise, Dell EMC, and Supermicro. 
 
-Currently, scripts here allow you to simplify the provisioning of 
+Currently, my scripts here allow you to simplify the provisioning of 
 servers that are have the Redfish standard integrated onto their management
 interfaces. In the future, I will add more and more scripts and examples for 
 various server types. 
