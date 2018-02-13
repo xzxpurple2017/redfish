@@ -59,8 +59,22 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+determine_git_changes() {
+	git_color=32   # Green text
+	## Good idea but this is too slow for prompt
+	#git remote update >/dev/null 2>&1
+	#git status -uno 2> /dev/null | grep -q 'Your branch is behind' && git_color=35
+	[[ -z $(git status -uno --porcelain 2> /dev/null) ]] ||	git_color=31   # Red text
+	echo $git_color
+}
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] '
+    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00;$(determine_git_changes)m\]$(parse_git_branch) \[\033[01;34m\]\$\[\033[00m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
