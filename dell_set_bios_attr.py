@@ -113,7 +113,25 @@ class Utils:
 		if response.status_code == requests.codes.ok:
 			return (response.json()['PowerState'])
 
-	def reboot_server(self):
+	def set_power_state(self, power_state_option):
+		power_url = "%s/Systems/System.Embedded.1/Actions/ComputerSystem.Reset" % (self.root_url)
+		payload = {'ResetType': power_state_option}
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		response = requests.request(
+			"POST",
+			power_url,
+			headers=headers,
+			data=payload,
+			verify=False,
+			timeout=30.000
+		)
+		if response.status_code == requests.codes.ok:
+			return (response.text)
+
+	def set_bios_attr(self,)
 		
 
 
