@@ -71,21 +71,17 @@ class Utils:
 		# Check to make sure we get a successful HTTP 201 Created response
 		#if re.search(r'^2[0-9][0-9]$', str(response.status_code)):
 		if response.status_code == requests.codes.created:
-			x_auth_token = response.headers['X-Auth-Token']
+			self.x_auth_token = response.headers['X-Auth-Token']
 			session_id = response.headers['Location']
 			self.curr_session_location = "%s%s" % (self.iDRAC_https_url, session_id)
 		else:
 			print ("# ERROR -- Authorization attempt for %s returned err code %s" % (self.iDRAC_https_url, str(response.status_code)))
 			sys.exit(1)
 
-		return x_auth_token
-
-
-
-	def del_curr_session(self, x_auth_token):
+	def del_curr_session(self):
 		headers = {
 			'Content-Type': "application/json",
-			'X-Auth-Token': x_auth_token
+			'X-Auth-Token': self.x_auth_token
 		}
 		response = requests.request(
 			"DELETE",
@@ -100,6 +96,25 @@ class Utils:
 		else:
 			print ("# ERROR -- Session deletion attempt failed returned err code %s" % (str(response.status_code)))
 			sys.exit(1)
+	
+	def get_power_state(self):
+		systems_url = "%s/Systems/System.Embedded.1" % (self.root_url)
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		response = requests.request(
+			"GET",
+			systems_url,
+			headers=headers,
+			verify=False,
+			timeout=10.000
+		)
+		if response.status_code == requests.codes.ok:
+			return (response.json()['PowerState'])
+
+	def reboot_server(self):
+		
 
 
 ##===main program==
@@ -108,11 +123,11 @@ def main():
 	parse_args()
 
 	utils_obj = Utils(iDRAC_https_url, iDRAC_account, iDRAC_password)
-	x_auth_token = utils_obj.auth_session()
+	utils_obj.auth_session()
 	# TODO: stuff here
+	print (utils_obj.get_power_state())
 	# Logout of iDRAC
-	time.sleep(30)
-	utils_obj.del_curr_session(x_auth_token)
+	print (utils_obj.del_curr_session())
 
 	sys.exit(0)
 
