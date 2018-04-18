@@ -131,7 +131,26 @@ class Utils:
 		if response.status_code == requests.codes.ok:
 			return (response.text)
 
-	def set_bios_attr(self,)
+	def set_bios_attr(self, bios_data)
+		set_bios_url = "%s/Systems/System.Embedded.1/Bios/Settings" % (self.root_url)
+		payload = {"Attributes":bios_data}
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		response = requests.request(
+			"PATCH",
+			set_bios_url,
+			headers=headers,
+			data=payload,
+			verify=False,
+			timeout=60.000
+		)
+		
+		
+	def reset_bios_dflt(self)
+		reset_bios_url = "%s/Systems/System.Embedded.1/Bios/Actions/Bios.ResetBios" % (self.root_url)
+
 		
 
 
