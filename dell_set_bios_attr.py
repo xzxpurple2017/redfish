@@ -131,11 +131,13 @@ class Utils:
 			"POST",
 			power_url,
 			headers=headers,
-			data=payload,
+			data=json.dumps(payload),
 			verify=False,
 			timeout=30.000
 		)
 		if response.status_code == requests.codes.ok:
+			return (response.text)
+		else:
 			return (response.text)
 
 	def set_bios_attr(self, bios_data):
@@ -171,7 +173,7 @@ class Utils:
 			timeout=60.000
 		)
 		if response.status_code == requests.codes.ok:
-			return (response.text)
+			return ('Success')
 
 	# NOTE: Currently, I assume that all new servers come with 'Administrator' 
 	# as default username. Please change this function accordingly if this changes.
@@ -220,6 +222,11 @@ class Utils:
 				else:
 					return ('# ERROR -- Could not set iDRAC password. Returned error code %s') % (response.status_code)
 				break
+	
+	# Dell currently does not support creating RAID virtual disks via Redfish
+	# They plan on releasing this feature Q2 2018
+	# Until then, you can use SCP feature to import these settings
+
 
 
 ##===main program==
@@ -230,8 +237,29 @@ def main():
 	utils_obj = Utils(iDRAC_https_url, iDRAC_account, iDRAC_password)
 	utils_obj.auth_session()
 	# TODO: stuff here
-	print (utils_obj.get_power_state())
-	print (utils_obj.set_idrac_credentials('Mayrh-Mayrila'))
+	#print (utils_obj.get_power_state())
+	#print (utils_obj.set_idrac_credentials('Mayrh-Mayrila'))
+	success_flag = (utils_obj.reset_bios_dflt())
+	if success_flag == 'Success':
+#		print (utils_obj.set_power_state('ForceOff'))
+#		
+#		counter = 0
+#		interval = 1
+#		max_count = 600
+#
+#		while counter <= max_count:
+#			time.sleep(interval)
+#			srv_power_state = utils_obj.get_power_state()
+#			print (srv_power_state)
+#			if srv_power_state == 'Off':
+#				break
+#			counter = counter + interval
+#			remainder = max_count - counter
+#			s = str(remainder) + ' seconds remaining in POST'
+#			print(s, end='')
+#			print('\r', end='')
+#
+		print (utils_obj.set_power_state('On'))
 	# Logout of iDRAC
 	print (utils_obj.del_curr_session())
 
