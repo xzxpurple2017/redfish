@@ -115,6 +115,13 @@ class Utils:
 
 	def set_power_state(self, power_state_option):
 		power_url = "%s/Systems/System.Embedded.1/Actions/ComputerSystem.Reset" % (self.root_url)
+		# Power state options:
+		#   "On",
+		#   "ForceOff",
+		#   "GracefulRestart",
+		#   "GracefulShutdown",
+		#   "PushPowerButton",
+		#   "Nmi"
 		payload = {'ResetType': power_state_option}
 		headers = {
 			'Content-Type': "application/json",
@@ -131,7 +138,7 @@ class Utils:
 		if response.status_code == requests.codes.ok:
 			return (response.text)
 
-	def set_bios_attr(self, bios_data)
+	def set_bios_attr(self, bios_data):
 		set_bios_url = "%s/Systems/System.Embedded.1/Bios/Settings" % (self.root_url)
 		payload = {"Attributes":bios_data}
 		headers = {
@@ -146,12 +153,73 @@ class Utils:
 			verify=False,
 			timeout=60.000
 		)
+		if response.status_code == requests.codes.ok:
+			return (response.text)
 		
 		
-	def reset_bios_dflt(self)
+	def reset_bios_dflt(self):
 		reset_bios_url = "%s/Systems/System.Embedded.1/Bios/Actions/Bios.ResetBios" % (self.root_url)
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		response = requests.request(
+			"POST",
+			reset_bios_url,
+			headers=headers,
+			verify=False,
+			timeout=60.000
+		)
+		if response.status_code == requests.codes.ok:
+			return (response.text)
 
-		
+	# NOTE: Currently, I assume that all new servers come with 'Administrator' 
+	# as default username. Please change this function accordingly if this changes.
+	#
+	def set_idrac_credentials(self, new_password):
+		root_idrac_accounts_url = "%s/Managers/iDRAC.Embedded.1/Accounts" % (self.root_url)
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		response = requests.request(
+			"GET",
+			root_idrac_accounts_url,
+			headers=headers,
+			verify=False,
+			timeout=30.000
+		)
+		output = response.json()
+		for e in output['Members']:
+			each_account_path = e['@odata.id']
+			each_account_url = "%s%s" % (self.iDRAC_https_url, each_account_path)
+			response = requests.request(
+				"GET",
+				each_account_url,
+				headers=headers,
+				verify=False,
+				timeout=10.000
+			)
+			output = response.json()
+			UserName = output['UserName']
+			if UserName == 'Administrator':
+				# Now that we have found the iDRAC account ID, we can proceed to change it 
+				# to out standard IT defaults
+				payload = {'Password': new_password}
+				response = requests.request(
+					"PATCH",
+					each_account_url,
+					headers=headers,
+					data=json.dumps(payload),
+					verify=False,
+					timeout=30.000
+				)
+				if response.status_code == requests.codes.ok:
+					# TODO: Maybe parse JSON to deliver better output message
+					return (response.text)
+				else:
+					return ('# ERROR -- Could not set iDRAC password. Returned error code %s') % (response.status_code)
+				break
 
 
 ##===main program==
@@ -163,6 +231,7 @@ def main():
 	utils_obj.auth_session()
 	# TODO: stuff here
 	print (utils_obj.get_power_state())
+	print (utils_obj.set_idrac_credentials('Mayrh-Mayrila'))
 	# Logout of iDRAC
 	print (utils_obj.del_curr_session())
 
