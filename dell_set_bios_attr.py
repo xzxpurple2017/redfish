@@ -7,6 +7,7 @@
 # servers. You should run it in parallel to gather info for many servers.
 #
 #
+import re
 import os
 import sys
 import json
@@ -135,10 +136,10 @@ class Utils:
 			verify=False,
 			timeout=30.000
 		)
-		if response.status_code == requests.codes.ok:
-			return (response.text)
+		if re.compile("2[0-9][0-9]").match(str(response.status_code)):
+			return ("# INFO -- Successfully performed a '%s'" % (power_state_option))
 		else:
-			return (response.text)
+			return ("# ERROR -- returned err code '%s' with err message '%s'" % (str(response.status_code), response.text))
 
 	def set_bios_attr(self, bios_data):
 		set_bios_url = "%s/Systems/System.Embedded.1/Bios/Settings" % (self.root_url)
@@ -320,18 +321,22 @@ class Utils:
 		payload = {}
 		bootseq_list = []
 
-		index_hash = {}
 		for e in output['Attributes'][boot_seq]:
-			index_hash[e['Index']] ={
-										'Enabled' = e['Enabled'],
-										'Id' = e['Id'],
-										'Name' = e['Name']
-									}
+			if e['Name'] == 'HardDisk.List.1-1':
+				bootseq_list.insert(0, e)
+			elif e['Name'] == 'NIC.Integrated.1-1-1':
+				bootseq_list.insert(1, e)
+			elif e['Name'] == 'NIC.Integrated.1-3-1':
+				bootseq_list.insert(1, e)
+			else:
+				bootseq_list.append(e)
+
+		for i in bootseq_list:
+			index = bootseq_list.index(i)
+			i['Index'] = index
 
 		payload['Attributes'] = {boot_seq:bootseq_list}
 		json_data = json.dumps(payload)
-
-		return json_data
 
 		# Build a hash first and then convert to JSON
 		# Should look something like this for Dell R640
@@ -363,25 +368,46 @@ class Utils:
 		#
 		#
 
+		response = requests.request(
+			"PATCH",
+			set_boot_ord_url,
+			#data=json.dumps(payload),
+			data=json_data,
+			headers=headers,
+			verify=False,
+			timeout=60.000
+		)
+		output = response.json()
+		if response.status_code == requests.codes.ok:
+			return ("# INFO -- Successfully set boot state to defaults")
+		elif response.status_code == 500:
+			return ("# WARN -- Experienced server err message: %s" % (str(output['error']['@Message.ExtendedInfo'])))
+		else:
+			return ("# ERROR -- set BIOS boot settings failed returned err code '%s' and err message: %s" % (str(response.status_code), str(output)))
 
-		#boot_device_list = '[{"Enabled": true, "Id": "BIOS.Setup.1-1#BootSeq#HardDisk.List.1-1#c9203080df84781e2ca3d512883dee6f", "Index": 0, "Name": "HardDisk.List.1-1"},{"Enabled": true, "Id": "BIOS.Setup.1-1#BootSeq#%s#c375e70570f3960b7889246f797540f2", "Index": 1, "Name": "%s"}]' % (target_nic,target_nic)
-		#boot_device_list = '[{Enabled: true, Id: BIOS.Setup.1-1#BootSeq#HardDisk.List.1-1, Index: 0, Name: HardDisk.List.1-1},{Enabled: true, Id: BIOS.Setup.1-1#BootSeq#%s, Index: 1, Nameuuuuuuu: %s}]' % (target_nic,target_nic)
-		#payload = {"Attributes": {boot_seq:boot_device_list}}
-		#return payload
-		#data=json.dumps(payload)
-		#return data
-
-		#response = requests.request(
-		#	"PATCH",
-		#	set_boot_ord_url,
-		#	#data=json.dumps(payload),
-		#	data=json_data,
-		#	headers=headers,
-		#	verify=False,
-		#	timeout=60.000
-		#)
-		#output = response.json()
-		#return (response.status_code, output)
+	def create_bios_config_job(self,target):
+		idrac_jobs_url = "%s/Managers/iDRAC.Embedded.1/Jobs" % (self.root_url)
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		payload = {"TargetSettingsURI":target}
+		response = requests.request(
+			"POST",
+			idrac_jobs_url,
+			data=json.dumps(payload),
+			headers=headers,
+			verify=False,
+			timeout=60.000
+		)
+		output = response.json()
+		if response.status_code == requests.codes.ok:
+			return ("# INFO -- Successfully set boot state to defaults")
+		elif response.status_code == 500:
+			return ("# WARN -- Experienced server err message: %s" % (str(output['error']['@Message.ExtendedInfo'])))
+		else:
+			return ("# ERROR -- job creation job failed with err code '%s' and err message: '%s'" % (str(response.status_code), str(output)))
+		
 
 ##===main program==
 
@@ -394,6 +420,7 @@ def main():
 	print (utils_obj.get_power_state())
 	utils_obj.get_bios_boot_mode()
 	print (utils_obj.set_boot_order())
+	print (utils_obj.create_bios_config_job('/redfish/v1/Systems/System.Embedded.1/Bios/Settings'))
 	#print (utils_obj.set_idrac_credentials('Mayrh-Mayrila'))
 #	success_flag = (utils_obj.reset_bios_dflt())
 #	if success_flag == 'Success':
@@ -416,6 +443,8 @@ def main():
 #			print('\r', end='')
 #
 #	print (utils_obj.set_power_state('On'))
+	if reboot_flag:
+		print (utils_obj.set_power_state('GracefulRestart'))
 	# Logout of iDRAC
 	print (utils_obj.del_curr_session())
 
