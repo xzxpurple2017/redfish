@@ -233,6 +233,23 @@ class Utils:
 	# Boot order stuff
 	# TODO: Need to figure out 1Gbps interface by comparing last octet of 'PermanentMACAddress'
 	# Note that 'HardDisk.List.1-1' seems to work regardless whether or not RAID is integrated or discrete
+	def get_bios_boot_mode(self):
+		get_bios_url = "%s/Systems/System.Embedded.1/Bios" % (self.root_url)
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		response = requests.request(
+			"GET",
+			get_bios_url,
+			headers=headers,
+			verify=False,
+			timeout=10.000
+		)
+		output = response.json()
+		current_boot_mode = output[u'Attributes']["BootMode"]
+		self.current_boot_mode = current_boot_mode
+
 	#def get_boot_order(self):
 
 	def set_boot_order(self):
@@ -267,15 +284,31 @@ class Utils:
 			output = response.json()
 			if output['SpeedMbps'] == 1000:
 				one_gbps_list.append(output['Id'])
-
 		try:
 			target_nic = sorted(one_gbps_list)[0]
 		except:
 			target_nic = 'NIC.Integrated.1-1-1'
 		
-		return (target_nic)
-				
+		# Set the boot order to have hard drive boot first and then NIC
+		if self.current_boot_mode == "Uefi":
+			boot_seq = "UefiBootSeq"
+		else:
+			boot_seq = "BootSeq"
 
+		#boot_device_list = '[{"Enabled": true, "Id": "BIOS.Setup.1-1#BootSeq#HardDisk.List.1-1#c9203080df84781e2ca3d512883dee6f", "Index": 0, "Name": "HardDisk.List.1-1"},{"Enabled": true, "Id": "BIOS.Setup.1-1#BootSeq#%s#c375e70570f3960b7889246f797540f2", "Index": 1, "Name": "%s"}]' % (target_nic,target_nic)
+		boot_device_list = '[{"Enabled": true, "Id": "BIOS.Setup.1-1#BootSeq#HardDisk.List.1-1", "Index": 0, "Name": "HardDisk.List.1-1"},{"Enabled": true, "Id": "BIOS.Setup.1-1#BootSeq#%s", "Index": 1, "Name": "%s"}]' % (target_nic,target_nic)
+		payload = {"Attributes": {boot_seq:boot_device_list}}
+		return payload
+		response = requests.request(
+			"PATCH",
+			set_boot_ord_url,
+			data=json.dumps(payload),
+			headers=headers,
+			verify=False,
+			timeout=60.000
+		)
+		output = response.json()
+		#return (response.status_code, output)
 
 ##===main program==
 
@@ -286,6 +319,7 @@ def main():
 	utils_obj.auth_session()
 	# TODO: stuff here
 	print (utils_obj.get_power_state())
+	utils_obj.get_bios_boot_mode()
 	print (utils_obj.set_boot_order())
 	#print (utils_obj.set_idrac_credentials('Mayrh-Mayrila'))
 #	success_flag = (utils_obj.reset_bios_dflt())
