@@ -226,7 +226,55 @@ class Utils:
 	# Dell currently does not support creating RAID virtual disks via Redfish
 	# They plan on releasing this feature Q2 2018
 	# Until then, you can use SCP feature to import these settings
+	# TODO: Figure out whether using integrated or RAID controller maybe?
 
+
+
+	# Boot order stuff
+	# TODO: Need to figure out 1Gbps interface by comparing last octet of 'PermanentMACAddress'
+	# Note that 'HardDisk.List.1-1' seems to work regardless whether or not RAID is integrated or discrete
+	#def get_boot_order(self):
+
+	def set_boot_order(self):
+		set_boot_ord_url = "%s/Systems/System.Embedded.1/BootSources/Settings" % (self.root_url)
+		ethernet_dev_url = "%s/Systems/System.Embedded.1/EthernetInterfaces" % (self.root_url)
+		headers = {
+			'Content-Type': "application/json",
+			'X-Auth-Token': self.x_auth_token
+		}
+		# Determine the 1Gbps interface
+		# We want this to boot second after the hard drive
+		response = requests.request(
+			"GET",
+			ethernet_dev_url,
+			headers=headers,
+			verify=False,
+			timeout=10.000
+		)
+		output = response.json()
+
+		one_gbps_list = []
+		for e in output['Members']:
+			each_nic_path = e['@odata.id']
+			each_nic_url = "%s%s" % (self.iDRAC_https_url, each_nic_path)
+			response = requests.request(
+				"GET",
+				each_nic_url,
+				headers=headers,
+				verify=False,
+				timeout=10.000
+			)
+			output = response.json()
+			if output['SpeedMbps'] == 1000:
+				one_gbps_list.append(output['Id'])
+
+		try:
+			target_nic = sorted(one_gbps_list)[0]
+		except:
+			target_nic = 'NIC.Integrated.1-1-1'
+		
+		return (target_nic)
+				
 
 
 ##===main program==
@@ -237,10 +285,11 @@ def main():
 	utils_obj = Utils(iDRAC_https_url, iDRAC_account, iDRAC_password)
 	utils_obj.auth_session()
 	# TODO: stuff here
-	#print (utils_obj.get_power_state())
+	print (utils_obj.get_power_state())
+	print (utils_obj.set_boot_order())
 	#print (utils_obj.set_idrac_credentials('Mayrh-Mayrila'))
-	success_flag = (utils_obj.reset_bios_dflt())
-	if success_flag == 'Success':
+#	success_flag = (utils_obj.reset_bios_dflt())
+#	if success_flag == 'Success':
 #		print (utils_obj.set_power_state('ForceOff'))
 #		
 #		counter = 0
@@ -259,7 +308,7 @@ def main():
 #			print(s, end='')
 #			print('\r', end='')
 #
-		print (utils_obj.set_power_state('On'))
+#	print (utils_obj.set_power_state('On'))
 	# Logout of iDRAC
 	print (utils_obj.del_curr_session())
 
