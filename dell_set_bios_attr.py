@@ -146,7 +146,7 @@ class Utils:
 
 	def set_bios_attr(self, bios_data):
 		set_bios_url = "%s/Systems/System.Embedded.1/Bios/Settings" % (self.root_url)
-		payload = {"Attributes":bios_data}
+		payload = {'Attributes':bios_data}
 		headers = {
 			'Content-Type': "application/json",
 			'X-Auth-Token': self.x_auth_token
@@ -155,7 +155,7 @@ class Utils:
 			"PATCH",
 			set_bios_url,
 			headers=headers,
-			data=payload,
+			data=json.dumps(payload),
 			verify=False,
 			timeout=60.000
 		)
@@ -422,9 +422,9 @@ def main():
 	new_username, new_password = new_user_passwd.split(',')
 
 	# Parse JSON config file for BIOS attributes
-	data = json.load(open(data_file))
-	data['ServerAssetTag'] = asset_tag
-	data['ServerName'] = "mgmt-" + asset_tag + ".intacct.com"
+	#data = json.load(open(data_file))
+	#data['ServerAssetTag'] = asset_tag
+	#data['ServerName'] = "mgmt-" + asset_tag + ".intacct.com"
 
 	utils_obj = Utils(iDRAC_https_url, iDRAC_account, iDRAC_password)
 	utils_obj.auth_session()
@@ -432,13 +432,16 @@ def main():
 	# TODO: stuff here
 	print (utils_obj.get_power_state())
 
+	data = {}
+	data['BootMode'] = 'Bios'
 	print (utils_obj.set_bios_attr(data))
-
-	utils_obj.get_bios_boot_mode()
-	print (utils_obj.set_boot_order())
 	print (utils_obj.create_bios_config_job('/redfish/v1/Systems/System.Embedded.1/Bios/Settings'))
-	# TODO: Implement dynamic way to set credentials rather than numeric ID
-	print (utils_obj.set_idrac_credentials(new_username, new_password))
+
+#	utils_obj.get_bios_boot_mode()
+#	print (utils_obj.set_boot_order())
+#	print (utils_obj.create_bios_config_job('/redfish/v1/Systems/System.Embedded.1/Bios/Settings'))
+#	# TODO: Implement dynamic way to set credentials rather than numeric ID
+#	print (utils_obj.set_idrac_credentials(new_username, new_password))
 
 #	success_flag = (utils_obj.reset_bios_dflt())
 #	if success_flag == 'Success':
