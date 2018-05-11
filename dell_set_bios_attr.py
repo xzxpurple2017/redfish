@@ -24,6 +24,7 @@ def parse_args():
 	global iDRAC_https_url
 	global iDRAC_account
 	global iDRAC_password
+	global new_user_passwd
 	global asset_tag
 	global reboot_flag
 	global data_file
@@ -37,6 +38,7 @@ def parse_args():
 	parser.add_argument('-a', '--asset', help='Enter asset tag', required=True)
 	parser.add_argument('-u', '--username', help='Enter username', required=True)
 	parser.add_argument('-p', '--password', help='Enter password', required=True)
+	parser.add_argument('-c', '--credential', help='Enter new username/password comma-separated', required=True)
 	parser.add_argument('-f', '--file', help='Path to JSON config file', required=True)
 	parser.add_argument('-r', '--reboot', help='Toggle to reboot', action='store_true')
 	parser.add_argument('-d', '--default', help='Reset BIOS to factory defaults', action='store_true')
@@ -45,6 +47,7 @@ def parse_args():
 	iDRAC_https_url = 'https://' + args['ip']
 	iDRAC_account = args['username']
 	iDRAC_password = args['password']
+	new_user_passwd = args['credential']
 	asset_tag = args['asset']
 	data_file = args['file']
 	reboot_flag = args['reboot']
@@ -157,7 +160,9 @@ class Utils:
 			timeout=60.000
 		)
 		if response.status_code == requests.codes.ok:
-			return (response.text)
+			return ("# INFO -- Successfully returned code '%s' with message: '%s'" % (str(response.status_code), response.text))
+		else:
+			return ("# ERROR -- returned err code '%s' with err message '%s'" % (str(response.status_code), response.text))
 		
 		
 	def reset_bios_dflt(self):
@@ -176,10 +181,7 @@ class Utils:
 		if response.status_code == requests.codes.ok:
 			return ('Success')
 
-	# NOTE: Currently, I assume that all new servers come with 'Administrator' 
-	# as default username. Please change this function accordingly if this changes.
-	#
-	def set_idrac_credentials(self, new_password):
+	def set_idrac_credentials(self, new_username, new_password):
 		root_idrac_accounts_url = "%s/Managers/iDRAC.Embedded.1/Accounts" % (self.root_url)
 		headers = {
 			'Content-Type': "application/json",
@@ -204,11 +206,13 @@ class Utils:
 				timeout=10.000
 			)
 			output = response.json()
-			UserName = output['UserName']
-			if UserName == 'Administrator':
+			#UserName = output['UserName']
+			Id = str(output['Id'])
+			if Id == '2':
+				print (each_account_url)
 				# Now that we have found the iDRAC account ID, we can proceed to change it 
 				# to out standard IT defaults
-				payload = {'Password': new_password}
+				payload = {'UserName': new_username, 'Password': new_password}
 				response = requests.request(
 					"PATCH",
 					each_account_url,
@@ -219,9 +223,9 @@ class Utils:
 				)
 				if response.status_code == requests.codes.ok:
 					# TODO: Maybe parse JSON to deliver better output message
-					return (response.text)
+					return ("# INFO -- Response code: '%s' Output: %s" % (str(response.status_code), response.text))
 				else:
-					return ('# ERROR -- Could not set iDRAC password. Returned error code %s') % (response.status_code)
+					return ("# ERROR -- Could not set iDRAC password. Returned error code '%s' and err mesg: '%s'") % (response.status_code, response.text)
 				break
 	
 		# Get 1Gbps NIC
@@ -401,8 +405,9 @@ class Utils:
 			timeout=60.000
 		)
 		output = response.json()
+		# TODO: Obtain Job ID from header and poll for its creation status
 		if response.status_code == requests.codes.ok:
-			return ("# INFO -- Successfully set boot state to defaults")
+			return ("# INFO -- Successfully created job with ID:")
 		elif response.status_code == 500:
 			return ("# WARN -- Experienced server err message: %s" % (str(output['error']['@Message.ExtendedInfo'])))
 		else:
@@ -414,14 +419,27 @@ class Utils:
 def main():
 	parse_args()
 
+	new_username, new_password = new_user_passwd.split(',')
+
+	# Parse JSON config file for BIOS attributes
+	data = json.load(open(data_file))
+	data['ServerAssetTag'] = asset_tag
+	data['ServerName'] = "mgmt-" + asset_tag + ".intacct.com"
+
 	utils_obj = Utils(iDRAC_https_url, iDRAC_account, iDRAC_password)
 	utils_obj.auth_session()
+	
 	# TODO: stuff here
 	print (utils_obj.get_power_state())
+
+	print (utils_obj.set_bios_attr(data))
+
 	utils_obj.get_bios_boot_mode()
 	print (utils_obj.set_boot_order())
 	print (utils_obj.create_bios_config_job('/redfish/v1/Systems/System.Embedded.1/Bios/Settings'))
-	#print (utils_obj.set_idrac_credentials('Mayrh-Mayrila'))
+	# TODO: Implement dynamic way to set credentials rather than numeric ID
+	print (utils_obj.set_idrac_credentials(new_username, new_password))
+
 #	success_flag = (utils_obj.reset_bios_dflt())
 #	if success_flag == 'Success':
 #		print (utils_obj.set_power_state('ForceOff'))
@@ -443,8 +461,12 @@ def main():
 #			print('\r', end='')
 #
 #	print (utils_obj.set_power_state('On'))
+
 	if reboot_flag:
-		print (utils_obj.set_power_state('GracefulRestart'))
+		print (utils_obj.set_power_state('ForceOff'))
+		time.sleep(15)
+		print (utils_obj.set_power_state('On'))
+
 	# Logout of iDRAC
 	print (utils_obj.del_curr_session())
 
