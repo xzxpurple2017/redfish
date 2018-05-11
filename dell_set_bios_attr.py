@@ -432,16 +432,23 @@ def main():
 	# TODO: stuff here
 	print (utils_obj.get_power_state())
 
+	# Set BIOS boot mode from default UEFI
 	data = {}
 	data['BootMode'] = 'Bios'
 	print (utils_obj.set_bios_attr(data))
 	print (utils_obj.create_bios_config_job('/redfish/v1/Systems/System.Embedded.1/Bios/Settings'))
+	if reboot_flag:
+		print (utils_obj.set_power_state('ForceOff'))
+		time.sleep(15)
+		print (utils_obj.set_power_state('On'))
 
-#	utils_obj.get_bios_boot_mode()
-#	print (utils_obj.set_boot_order())
-#	print (utils_obj.create_bios_config_job('/redfish/v1/Systems/System.Embedded.1/Bios/Settings'))
-#	# TODO: Implement dynamic way to set credentials rather than numeric ID
-#	print (utils_obj.set_idrac_credentials(new_username, new_password))
+	time.sleep(300)
+
+	utils_obj.get_bios_boot_mode()
+	print (utils_obj.set_boot_order())
+	print (utils_obj.create_bios_config_job('/redfish/v1/Systems/System.Embedded.1/Bios/Settings'))
+	# TODO: Implement dynamic way to set credentials rather than numeric ID
+	print (utils_obj.set_idrac_credentials(new_username, new_password))
 
 #	success_flag = (utils_obj.reset_bios_dflt())
 #	if success_flag == 'Success':
